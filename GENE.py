@@ -1,9 +1,9 @@
 import string,sys,os,glob
 
-G1_START=int(159053590)
-G1_END=int(159053599)
-G2_START=int(158851230)
-G2_END=int(158851239)
+G1_START=int(1000)
+G1_END=int(1005)
+G2_START=int(2000)
+G2_END=int(2005)
 
 co=0
 fp=glob.glob('*.temp.vcf')
@@ -20,7 +20,7 @@ for fname in fp:
 			fpout.write(line)
 		else:
 			CHROM, POS = line.split('\t')[:2]
-			if CHROM == 'chr7' and (G1_START<=int(POS)<=G1_END or G2_START<=int(POS)<=G2_END):
+			if CHROM == 'chr1' and (G1_START<=int(POS)<=G1_END or G2_START<=int(POS)<=G2_END):
 				fpout.write(line)
 fp.close()
 fpout.close()
