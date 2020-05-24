@@ -1,9 +1,9 @@
 import string,sys,os,glob
 
-G1_START=int(159053590)
-G1_END=int(159053599)
-G2_START=int(158851230)
-G2_END=int(158851239)
+G1_START=int(1234)
+G1_END=int(1235)
+G2_START=int(2222)
+G2_END=int(2225)
 
 co=0
 fp=glob.glob('*.temp.vcf')
