@@ -40,15 +40,9 @@ for fname in fp:
 	os.system('java -Xmx8g -jar /home/program/gatk-4.0.11.0/gatk-package-4.0.11.0-local.jar BaseRecalibrator -R /home/hykim/REF/Human/hg19/hg19.fa -I '+Sample+'_recal_pass1.bam --known-sites /home/hykim/REF/1000GENOMES-phase_3_indel.vcf --known-sites /home/hykim/REF/dbsnp_138.hg19.vcf -O '+Sample+'_recal_pass2.table')
 	os.system('java -Xmx8g -jar /home/program/gatk-4.0.11.0/gatk-package-4.0.11.0-local.jar ApplyBQSR -R /home/hykim/REF/Human/hg19/hg19.fa -I '+Sample+'_recal_pass1.bam -bqsr '+Sample+'_recal_pass2.table -O '+Sample+'_recal_pass2.bam')
 	os.system('java -Xmx8g -jar /home/program/gatk-4.0.11.0/gatk-package-4.0.11.0-local.jar AnalyzeCovariates -before '+Sample+'_recal_pass1.table -after '+Sample+'_recal_pass2.table -plots '+Sample+'.BQSR.pdf')
-#	os.system('mv *pass1* Others/')
-#	os.system('mv *.table* Others/')
 
 	print "STEP4-1. Calling variants for all samples with HaplotypeCaller"
 	os.system('java -Xmx8g -jar /home/program/gatk-4.0.11.0/gatk-package-4.0.11.0-local.jar HaplotypeCaller -R /home/hykim/REF/Human/hg19/hg19.fa -I '+Sample+'_recal_pass2.bam -O '+Sample+'.rawVariants.g.vcf -ERC GVCF --genotyping-mode DISCOVERY --standard-min-confidence-threshold-for-calling 20')
-#	if not os.path.isdir('BAM'):
-#		os.mkdir('BAM')
-#	os.system('mv *_dedup* BAM/')
-#	os.system('mv *_pass2* Others/')
 
 print "STEP4-2. Combining all samples with CombineGVCFs"
 file_list=os.listdir(PATH)
@@ -77,13 +71,4 @@ os.system('perl /home/program/annovar/table_annovar.pl '+Cohort+'.Filtered.Varia
 
 ##print "STEP6. Annotation using SnpEff"
 ##os.system('java -jar snpEff/SnpSift.jar annotate /home/hykim/REF/clinvar_20200419.vcf test.SnpEff.dbSNP138.vcf > test.SnpEff.dbSNP138.clinva.vcf')
-
-if not os.path.isdir('VCF'):
-	os.mkdir('VCF')
-os.system('mv *.g.vcf* VCF/')
-if not os.path.isdir('ANNOV'):
-	os.mkdir('ANNOV')
-os.system('mv *.annov.* ANNOV/')
-os.system('mv *.vcf Others/')
-os.system('mv *.vcf.idx Others/')
 '''
