@@ -13,7 +13,7 @@ for fname in fp:
 
 	fp=open(fname,'r')
 	a=string.split(fname,'.')
-	fpout=open(a[0]+'.CYP3A.vcf','w')
+	fpout=open(a[0]+'.gene.vcf','w')
 	
 	for line in fp.xreadlines():
 		if line.startswith('#'):
