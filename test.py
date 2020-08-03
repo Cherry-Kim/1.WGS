@@ -1,3 +1,3 @@
 import string,sys
 
-print "hello"
+print "hello2"
