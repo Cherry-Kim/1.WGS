@@ -55,6 +55,8 @@ for i in CHR:
 #   os.system('grep -v "#" chr'+i+'.Genotype.g.vcf > chr'+i+'.Genotype2.vcf')
 # gvcf_list= [file for file in file_list if file.endswith("Genotype2.vcf")]
 # os.system('cat chr1.Genotype2_head.vcf '+" ".join(gvcf_list)+' > '+Cohort+'.g.vcf')
+#os.system('grep "^#" '+cohort+'.g.vcf > '+cohort+'_sort.g.vcf')
+#os.system('grep -v "^#" '+cohort+'.g.vcf | sort -k1,1V -k2n >> '+cohort+'_sort.g.vcf')
 
     os.system('grep "^#" chr'+i+'.Genotype.vcf > chr'+i+'.Genotype2_head.vcf')
     os.system('grep -v "#" chr'+i+'.Genotype.vcf > chr'+i+'.Genotype2.vcf')
