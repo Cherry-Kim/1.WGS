@@ -20,7 +20,7 @@ os.system('cat chrM.fa chr1.fa chr2.fa chr3.fa chr4.fa chr5.fa chr6.fa chr7.fa c
 ##------ Reference indexing -----------------------------------------------------##
 #sudo apt update
 #sudo apt install bowtie2
-os.system('bowtie2-build hg38.fa hg38')
+os.system('bowtie2-build hg38.fa hg38')	#*.bt2
 
 os.system('bwa index -a bwtsw hg38.fa')
 
