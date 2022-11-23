@@ -49,16 +49,6 @@ for i in CHR:
     print "STEP4-3. Joint-call samples in a GenomicDB datastore" 
     os.system('java -Xmx4g -jar /home/program/gatk-4.0.11.0/gatk-package-4.0.11.0-local.jar GenotypeGVCFs -R /home/hykim/REF/hg19.fa -V gendb://test_DB'+i+' -O chr'+i+'.Genotype.vcf')
 
-#   os.system('java -Xmx64g -jar /home/hykim/program/gatk-4.1.9.0/gatk-package-4.1.9.0-local.jar GenomicsDBImport -V 0014.rawVariants.g.vcf -V 0017.rawVariants.g.vcf --genomicsdb-update-workspace-path DB'+i+' --intervals chr'+i)
-#   os.system('java -Xmx64g -jar /home/hykim/program/gatk-4.1.9.0/gatk-package-4.1.9.0-local.jar GenotypeGVCFs -R /home/hykim/REF/hg19.fa -V gendb://DB'+i+' -O chr'+i+'.Genotype.g.vcf')
-#   os.system('grep "#" chr'+i+'.Genotype.g.vcf > chr'+i+'.Genotype2_head.vcf')
-#   os.system('grep -v "#" chr'+i+'.Genotype.g.vcf > chr'+i+'.Genotype2.vcf')
-# gvcf_list= [file for file in file_list if file.endswith("Genotype2.vcf")]
-# os.system('cat chr1.Genotype2_head.vcf '+" ".join(gvcf_list)+' > '+Cohort+'.g.vcf')
-#os.system('grep "^#" '+cohort+'.g.vcf > '+cohort+'_sort.g.vcf')
-#os.system('grep -v "^#" '+cohort+'.g.vcf | sort -k1,1V -k2n >> '+cohort+'_sort.g.vcf')
-
-   # os.system('grep "^#" chr'+i+'.Genotype.vcf > chr'+i+'.Genotype2_head.vcf')
     os.system('grep -v "#" chr'+i+'.Genotype.vcf > chr'+i+'.Genotype2.vcf')
 os.system('grep "^#" chr1.Genotype.vcf > chr1.Genotype2_head.vcf')
 gvcf_list = [file for file in file_list if file.endswith("Genotype2.vcf")]
