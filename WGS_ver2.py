@@ -39,6 +39,8 @@ for fname in fp:
 print "STEP4-2. Create a new GenomicDB databaseDB datastore from GVCFs"
 file_list=os.listdir(PATH)
 vcf_list= [file for file in file_list if file.endswith("rawVariants.g.vcf")]
+vcf_list.sort()
+
 CHR=[str(k) for k in range(1,23)]
 CHR.append('X')
 CHR.append('Y')
