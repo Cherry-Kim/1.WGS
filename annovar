@@ -1,0 +1,13 @@
+#Install ANNOVAR (https://sites.google.com/site/jpopgen/wgsa/setting-up-wgsa-linux?pli=1)
+  os.system('wget http://www.openbioinformatics.org/annovar/download/0wgxR2rIVP/annovar.latest.tar.gz')
+  os.system('tar -zxvf annovar.latest.tar.gz')
+  os.system('perl /BIO3/annovar/annotate_variation.pl -buildver hg38 -downdb -webfrom annovar refGene /BIO3/annovar/humand/')
+  os.system('perl ../annotate_variation.pl -buildver hg38 -downdb -webfrom annovar ensGene ./')
+  os.system('perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar knownGene ./')
+
+  #Install SnpEff
+  os.system('wget http://sourceforge.net/projects/snpeff/files/snpEff_v4_3t_core.zip')
+  os.system('unzip snpEff_v4_3t_core.zip')
+
+def STEP6_Anno(cohort):
+    os.system('perl /BIO3/annovar/annovar/table_annovar.pl '+cohort+'.vqsr.varfilter.pass.vcf.gz  /BIO3/annovar/humandb/ -buildver hg38 -out '+cohort+'.vqsr.varfilter.pass.annov.vcf -remove -otherinfo -protocol refGene,ensGene,exac10,gnomad211_exome,avsnp150,dbnsfp33a,clinvar_20220320 -operation g,g,f,f,f,f,f -nastring . -vcfinput -polish')
