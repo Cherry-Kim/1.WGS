@@ -1,0 +1,89 @@
+#1-1. convert vcf to annovar input
+def STEP1_input():
+    path,co = './',0
+    file_list = os.listdir(path)
+    vcf_list = [file for file in file_list if file.endswith('.g.vcf.gz')]
+    a = sorted(vcf_list, key=lambda z:z)
+    for i in a:
+        co += 1
+        sample = i.split('.g.vcf.gz')[0]
+        print(co,sample)
+        os.system('perl /BIO1/annovar/table_annovar.pl '+path+i+' /BIO1/annovar/humandb/ -buildver hg38 -out annovar/'+sample+' --thread 48  -remove -protocol refGene -operation g -nastring . -vcfinput -polish')
+#------------------------------------------
+
+#1-2. input files - making .maf input file 
+        input_files <- dir(pattern = "\\.txt$") #"sample.hg38_multianno.txt"
+        for (i in seq_along(input_files)) {
+          print(input_files[i])
+          #output_file <- paste0(sub(".hg38_multianno.txt$", "", input_files[i]), ".maf") 
+          output_file <- paste0(substr(input_files[i], 1, nchar(input_files[i]) - 4), ".maf")
+
+          var.annovar.maf <- annovarToMaf(
+            annovar = input_files[i],
+            Center = NULL, refBuild = 'hg38', tsbCol = NULL, table = 'refGene')
+
+          write.table(var.annovar.maf, output_file, quote = FALSE, sep = "\t", row.names = FALSE)
+        }
+
+#1-3. Correction =>  'Hugo_Symbol' 1 cloumn & 'Tumor_Sample_Barcode'
+def STEP3():
+    co = 0
+    fp1 = glob.glob('*.hg38_multianno.maf')
+    for fname in fp1:
+        co  += 1
+        sample = fname.split('/')[6].split('.hg38_multianno.maf')[0]
+        print(co,sample)
+        fp = open(fname,'r')
+        fpout = open(sample+'.maf','w')
+        head = fp.readline()
+        a = head.rstrip().split('\t')
+        fpout.write('Hugo_Symbol'+'\t'+'\t'.join(a[0:6])+'\t'+'\t'.join(a[7:])+'\n')
+        for line in fp:
+            line_temp = line.rstrip().split('\t')
+            fpout.write(line_temp[6]+'\t'+'\t'.join(line_temp[0:6])+'\t'+'\t'.join(line_temp[7:])+'\n')
+
+#1-4. Extract our genes
+def head():
+    fp = open('A1.maf','r')
+    fpout = open('head.maf','w')
+    hd = fp.readline()
+    fpout.write(hd)
+def STEP3():
+    co = 0
+    fp1 = glob.glob('*.maf')
+    for fname in fp1:
+        co  += 1
+        sample = fname.split('.maf')[0]
+        print(co,sample)
+        fp = open(fname,'r')
+        fpout = open('PS.maf','a')
+        head = fp.readline()
+        for line in fp:
+            line_temp = line.rstrip().split('\t')
+            if (line_temp[0] == "gene1") and (line_temp[3]=='152'):
+                fpout.write("gene1_1"+'\t'+'\t'.join(line_temp[1:])+'\n')
+            elif (line_temp[0] == "gene1") and (line_temp[3]=='152'):
+                fpout.write("gene1_2"+'\t'+'\t'.join(line_temp[1:])+'\n')
+            elif (line_temp[0] == "AR") and (line_temp[3]=='6759') :
+                fpout.write(line)
+
+#1-5. run oncoplot
+        library(maftools)
+        laml.maf = read.maf(maf = 'PS.maf')
+        laml.clin = system.file('extdata', 'tcga_laml_annot.tsv', package = 'maftools')
+        laml = read.maf(maf = laml.maf,
+                clinicalData = laml.clin,
+                verbose = FALSE)
+        genes <- c("AR","JAK3","TP53")
+
+        oncoplot(maf = laml_test, genes=genes, draw_titv = TRUE)
+        oncoplot(maf = laml, genes = genes, clinicalFeatures = 'FAB_classification')
+        fabcolors = RColorBrewer::brewer.pal(n = 8,name = 'Spectral')
+        names(fabcolors) = c("M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7")
+        fabcolors = list(FAB_classification = fabcolors)
+        
+        oncoplot( maf = laml, genes = genes,  clinicalFeatures = 'FAB_classification',
+                 sortByAnnotation = TRUE, annotationColor = fabcolors)
+
+
+
