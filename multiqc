@@ -1,0 +1,4 @@
+#STEP1. run fastqc
+
+$multiqc .
+multiqc *.fq.gz
