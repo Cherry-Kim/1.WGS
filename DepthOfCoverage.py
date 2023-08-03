@@ -7,7 +7,7 @@ for i in bam_list:
     co += 1
     sample = i.split('.sort.bam')[0]
     print(co,i)
-    #os.system('samtools depth '+sample+'.sort.bam > '+sample+'.sort.bam.depth')
+    os.system('samtools depth '+sample+'.sort.bam > '+sample+'.sort.bam.depth')
 
     avg_depth_output = os.popen("awk '{sum+=$3} END {print \"Sample " + sample + " Average Depth of Coverage: \", sum/3080419480}' " + sample + ".sort.bam.depth").read().strip()
     print(avg_depth_output)
